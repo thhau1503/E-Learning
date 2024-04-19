@@ -14,10 +14,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
+            android:text="1. Acsend"
             android:layout_centerInParent="true"
             android:textColor="@color/black" />
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_app"/>
     </ListView>
 </RelativeLayout>

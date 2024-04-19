@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".MainActivity">
+    tools:context=".HomeActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -88,7 +88,7 @@
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:src="@drawable/img_vocab" />
+                        android:src="@drawable/img" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -121,7 +121,7 @@
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:src="@drawable/img_tracnghiem" />
+                        android:src="@drawable/img_1" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -281,8 +281,8 @@
                         android:layout_height="75dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:src="@drawable/img_ranking"
-                        app:srcCompat="@drawable/img_ranking" />
+                        android:src="@drawable/img_2"
+                        app:srcCompat="@drawable/img_2" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
