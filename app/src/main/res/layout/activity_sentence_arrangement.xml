@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroud3"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sắp xếp câu"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:textSize="40sp"
+        android:textStyle="bold"/>
+
+    <!-- Các ô trống để người dùng kéo và thả các từ -->
+    <LinearLayout
+        android:id="@+id/linearLayoutWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/textViewQuestion"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textViewWord1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/drop_zone_background"
+            android:padding="8dp"
+            android:text="_________"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/textViewWord2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="_________"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:background="@drawable/drop_zone_background" />
+
+        <TextView
+            android:id="@+id/textViewWord3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="_________"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:background="@drawable/drop_zone_background" />
+
+        <TextView
+            android:id="@+id/textViewWord4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="_________"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:background="@drawable/drop_zone_background" />
+
+    </LinearLayout>
+
+    <!-- Các từ để người dùng chọn và kéo vào các ô trống -->
+    <LinearLayout
+        android:id="@+id/linearLayoutWordsToChoose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/linearLayoutWords"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textViewWordChoice1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Word1"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:background="@drawable/draggable_background"/>
+
+        <TextView
+            android:id="@+id/textViewWordChoice2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Word2"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:background="@drawable/draggable_background" />
+
+        <TextView
+            android:id="@+id/textViewWordChoice3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Word3"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:background="@drawable/draggable_background" />
+
+        <TextView
+            android:id="@+id/textViewWordChoice4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Word4"
+            android:textSize="20sp"
+            android:padding="8dp"
+            android:background="@drawable/draggable_background" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hoàn thành"
+        android:layout_below="@id/linearLayoutWordsToChoose"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+</RelativeLayout>
