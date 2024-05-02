@@ -27,7 +27,7 @@
     </TextView>
 
     <EditText
-        android:id="@+id/editEditProfileUserName"
+        android:id="@+id/editEditProfileName"
         android:layout_width="345dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -37,7 +37,7 @@
         android:drawableLeft="@drawable/ic_account1"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="User Name"
+        android:hint="Name"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -45,18 +45,18 @@
         android:paddingBottom="10dp">
     </EditText>
     <EditText
-        android:id="@+id/editEditProfileBirthdate"
+        android:id="@+id/editEditProfilePhone"
         android:layout_width="345dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_calendar"
+        android:drawableLeft="@drawable/ic_phone"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Birthdate"
-        android:inputType="textPersonName"
+        android:hint="Phone Number"
+        android:inputType="textPhonetic"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
@@ -81,24 +81,6 @@
         android:paddingBottom="10dp">
     </EditText>
 
-    <EditText
-        android:id="@+id/editEditProfileAddress"
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_address"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Create new password"
-        android:inputType="textPassword"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingRight="100dp"
-        android:paddingBottom="10dp">
-    </EditText>
     <Button
         android:id="@+id/btnEditProfileSave"
         android:layout_width="345dp"
