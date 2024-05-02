@@ -5,18 +5,24 @@
     android:background="@drawable/backgroud3"
     android:gravity="center_vertical"
     android:orientation="vertical">
-
     <TextView
         android:id="@+id/textViewQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sắp xếp câu"
+        android:text="Sentence Arrangement"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textStyle="bold"/>
 
-    <!-- Các ô trống để người dùng kéo và thả các từ -->
+    <TextView
+        android:id="@+id/textViewOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sentence: "
+        android:layout_below="@id/textViewQuestion"
+        android:layout_centerHorizontal="true"
+
+        android:textSize="20sp" />
     <LinearLayout
         android:id="@+id/linearLayoutWords"
         android:layout_width="match_parent"
@@ -113,12 +119,30 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/buttonPrevious"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Previous"
+        android:layout_below="@id/linearLayoutWordsToChoose"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentStart="true"/>
+
+    <Button
         android:id="@+id/buttonSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hoàn thành"
+        android:text="Summit"
         android:layout_below="@id/linearLayoutWordsToChoose"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/buttonNEXT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NEXT"
+        android:layout_below="@id/linearLayoutWordsToChoose"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

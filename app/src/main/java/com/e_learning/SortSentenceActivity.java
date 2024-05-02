@@ -25,6 +25,9 @@ public class SortSentenceActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private int currentSentenceId = 1;
     private String correctSentence = "";
+    private TextView textViewOrder;
+   private  Button buttonPrevious;
+   private Button buttonNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,11 @@ public class SortSentenceActivity extends AppCompatActivity {
         linearLayoutWords = findViewById(R.id.linearLayoutWords);
         linearLayoutWordsToChoose = findViewById(R.id.linearLayoutWordsToChoose);
         buttonSubmit = findViewById(R.id.buttonSubmit);
+        textViewOrder = findViewById(R.id.textViewOrder);
 
+
+        Button buttonPrevious = findViewById(R.id.buttonPrevious);
+        Button buttonNext = findViewById(R.id.buttonNEXT);
         databaseHelper = new DatabaseHelper(this);
 
         displaySentenceParts();
@@ -53,19 +60,35 @@ public class SortSentenceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 checkAnswer();
             }
+
         });
 
-        // Thiết lập sự kiện touch để bắt đầu kéo từng từ
+
         textViewWord1.setOnTouchListener(new MyTouchListener());
         textViewWord2.setOnTouchListener(new MyTouchListener());
         textViewWord3.setOnTouchListener(new MyTouchListener());
         textViewWord4.setOnTouchListener(new MyTouchListener());
 
-        // Thiết lập sự kiện drop để xử lý khi từ được thả vào ô trống
+
         textViewWordChoice1.setOnDragListener(new MyDragListener());
         textViewWordChoice2.setOnDragListener(new MyDragListener());
         textViewWordChoice3.setOnDragListener(new MyDragListener());
         textViewWordChoice4.setOnDragListener(new MyDragListener());
+        buttonPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToPreviousSentence();
+            }
+        });
+
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToNextSentence();
+            }
+        });
+        currentSentenceId = 1;
+        displayCurrentSentence();
     }
 
     private String getCorrectSentenceFromDatabase() {
@@ -100,10 +123,10 @@ public class SortSentenceActivity extends AppCompatActivity {
         cursor.close();
         database.close();
 
-        // Randomize danh sách các phần
+
         Collections.shuffle(partsList);
 
-        // Gán các phần đã randomize vào các TextView
+
         textViewWord1.setText(partsList.get(0));
         textViewWord2.setText(partsList.get(1));
         textViewWord3.setText(partsList.get(2));
@@ -140,9 +163,6 @@ public class SortSentenceActivity extends AppCompatActivity {
 
         displaySentenceParts();
     }
-
-
-
     private final class MyTouchListener implements View.OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -171,6 +191,43 @@ public class SortSentenceActivity extends AppCompatActivity {
                     break;
             }
             return true;
+
         }
+    }
+    private void navigateToPreviousSentence() {
+        if (currentSentenceId > 1) {
+            currentSentenceId--;
+            displayCurrentSentence();
+        } else {
+            Toast.makeText(this, "Already at the first sentence", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void navigateToNextSentence() {
+        int totalSentences = getTotalSentencesFromDatabase();
+        if (currentSentenceId < totalSentences) {
+            currentSentenceId++;
+            displayCurrentSentence();
+        } else {
+            Toast.makeText(this, "Already at the last sentence", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void displayCurrentSentence() {
+        displaySentenceParts();
+        correctSentence = getCorrectSentenceFromDatabase();
+        textViewOrder.setText("Sentence: " + currentSentenceId);
+    }
+
+    private int getTotalSentencesFromDatabase() {
+        SQLiteDatabase database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT COUNT(*) FROM SapXepCau", null);
+        int totalCount = 0;
+        if (cursor.moveToFirst()) {
+            totalCount = cursor.getInt(0);
+        }
+        cursor.close();
+        database.close();
+        return totalCount;
     }
 }

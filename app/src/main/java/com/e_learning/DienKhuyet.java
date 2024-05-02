@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
 public class DienKhuyet extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
@@ -19,52 +18,69 @@ public class DienKhuyet extends AppCompatActivity {
     private Button submitButton;
     private String currentAnswer;
     private TextView hintTextView;
-
+    private int currentExerciseId;
+    private TextView sencencesTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dien_khuyet);
 
-        // Initialize views
         questionTextView = findViewById(R.id.questionTextView);
         answerEditText = findViewById(R.id.answerEditText);
         submitButton = findViewById(R.id.submitButton);
-        hintTextView =findViewById(R.id.hintTextView);
-
-
-        // Initialize database
+        hintTextView = findViewById(R.id.hintTextView);
+        Button previousButton = findViewById(R.id.previousButton);
+        Button nextButton = findViewById(R.id.nextButton);
+        sencencesTextView =findViewById(R.id.sentenceTextView);
         dbHelper = new DatabaseHelper(this);
         database = dbHelper.getDatabase();
 
-        // Load first exercise
-        loadNextExercise();
 
-        // Submit button click listener
+        currentExerciseId = 1;
+        loadExercise(currentExerciseId);
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userAnswer = answerEditText.getText().toString().trim();
                 if (userAnswer.equalsIgnoreCase(currentAnswer)) {
-                    // Correct answer
                     Toast.makeText(DienKhuyet.this, "Correct!", Toast.LENGTH_SHORT).show();
-                    // Load next exercise
-                    loadNextExercise();
+                    currentExerciseId++;
+                    loadExercise(currentExerciseId);
                 } else {
-                    // Incorrect answer
                     Toast.makeText(DienKhuyet.this, "Incorrect! Try again.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentExerciseId > 1) {
+                    currentExerciseId--;
+                    loadExercise(currentExerciseId);
+                } else {
+                    Toast.makeText(DienKhuyet.this, "This is the first exercise.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int maxExerciseId = getMaxExerciseId();
+                if (currentExerciseId < maxExerciseId) {
+                    currentExerciseId++;
+                    loadExercise(currentExerciseId);
+                } else {
+                    Toast.makeText(DienKhuyet.this, "This is the last exercise.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void loadNextExercise() {
-
-        int currentExerciseId = -1;
-        if (cursor != null && !cursor.isClosed()) {
-            currentExerciseId = cursor.getInt(cursor.getColumnIndex("ID_Cau"));
-            cursor.close();
-        }
-        cursor = database.rawQuery("SELECT * FROM DienKhuyet WHERE ID_Cau > ? LIMIT 1", new String[]{String.valueOf(currentExerciseId)});
+    private void loadExercise(int exerciseId) {
+        cursor = database.rawQuery("SELECT * FROM DienKhuyet WHERE ID_Cau = ?", new String[]{String.valueOf(exerciseId)});
         if (cursor.moveToFirst()) {
             String question = cursor.getString(cursor.getColumnIndex("NoiDung"));
             String hint = cursor.getString(cursor.getColumnIndex("GoiY"));
@@ -72,11 +88,22 @@ public class DienKhuyet extends AppCompatActivity {
             questionTextView.setText(question);
             hintTextView.setText("Hint: " + hint);
             answerEditText.setText("");
+            sencencesTextView.setText("Sentence ID: " + currentExerciseId);
         } else {
-            Toast.makeText(this, "No more exercises.", Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(this, "Exercise not found.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private int getMaxExerciseId() {
+        int maxId = -1;
+        Cursor cursor = database.rawQuery("SELECT MAX(ID_Cau) AS max_id FROM DienKhuyet", null);
+        if (cursor.moveToFirst()) {
+            maxId = cursor.getInt(cursor.getColumnIndex("max_id"));
+        }
+        cursor.close();
+        return maxId;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
