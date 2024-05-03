@@ -10,6 +10,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.e_learning.home.HomeActivity;
+import com.e_learning.taikhoan.DatabaseHelper;
+import com.e_learning.taikhoan.ForgotPasswordActivity;
+import com.e_learning.taikhoan.SignActivity;
+
 public class MainActivity extends AppCompatActivity {
     private EditText editTextUsername, editTextPassword;
     private Button buttonLogin;
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (dbHelper.checkUser(username, password)) {
             Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MainActivity.this,     ForgotPasswordActivity.class));
+            startActivity(new Intent(MainActivity.this,     HomeActivity.class));
             finish();
         } else {
             Toast.makeText(this, "Tên người dùng hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();

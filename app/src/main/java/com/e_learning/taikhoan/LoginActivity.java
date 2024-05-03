@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.*;
 import android.widget.Toast;
+
+import com.e_learning.MainActivity;
+import com.e_learning.R;
+import com.e_learning.home.HomeActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -58,15 +61,15 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Vui lòng nhập tên người dùng và mật khẩu!", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if (dbHelper.checkUser(username, password)) {
-            Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            int ID_User = dbHelper.getID_User(username, password);
             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("username", username);
             editor.putString("password", password);
+            editor.putInt("ID_User", ID_User);
             editor.apply();
-            startActivity(new Intent(LoginActivity.this, com.e_learning.taikhoan.MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         } else {
             Toast.makeText(this, "Tên người dùng hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();

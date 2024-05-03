@@ -1,35 +1,99 @@
 package com.e_learning.taikhoan;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "HocNgonNgu.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
+    private static String DB_PATH = "";
+    private final Context mContext;
+    private SQLiteDatabase mDataBase;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.mContext = context;
+        DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
+        try {
+            createDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createDataBase() throws IOException {
+        boolean mDataBaseExist = checkDataBase();
+        if (!mDataBaseExist) {
+            this.getReadableDatabase();
+            this.close();
+            try {
+                copyDataBase();
+            } catch (IOException mIOException) {
+                throw new Error("ErrorCopyingDataBase");
+            }
+        }
+    }
+
+    private boolean checkDataBase() {
+        File dbFile = new File(DB_PATH + DATABASE_NAME);
+        return dbFile.exists();
+    }
+
+    private void copyDataBase() throws IOException {
+        InputStream mInput = mContext.getAssets().open("database/" + DATABASE_NAME);
+        String outFileName = DB_PATH + DATABASE_NAME;
+        OutputStream mOutput = new FileOutputStream(outFileName);
+        byte[] mBuffer = new byte[1024];
+        int mLength;
+        while ((mLength = mInput.read(mBuffer)) > 0) {
+            mOutput.write(mBuffer, 0, mLength);
+        }
+        mOutput.flush();
+        mOutput.close();
+        mInput.close();
+    }
+
+    public boolean openDataBase() throws SQLException {
+        String mPath = DB_PATH + DATABASE_NAME;
+        mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+        return mDataBase != null;
+    }
+
+    @Override
+    public synchronized void close() {
+        if (mDataBase != null)
+            mDataBase.close();
+        super.close();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE User (ID_User INTEGER PRIMARY KEY AUTOINCREMENT, HoTen TEXT, Point INTEGER, Email TEXT, SDT TEXT, Password TEXT, Username TEXT)";
-        db.execSQL(createTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS User");
-        onCreate(db);
+    }
+
+    public SQLiteDatabase getDatabase() {
+        return this.getReadableDatabase();
     }
 
     public boolean checkUser(String usernameOrEmail, String password) {
         return checkUsernamePassword(usernameOrEmail, password) || checkEmailPassword(usernameOrEmail, password);
     }
+
     public boolean checkUsernamePassword(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM User WHERE Username = ? AND Password = ?";
@@ -50,6 +114,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public int getID_User(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT ID_User FROM User WHERE Username=? AND Password=?", new String[]{username, password});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            @SuppressLint("Range") int ID_User = cursor.getInt(cursor.getColumnIndex("ID_User"));
+            cursor.close();
+            return ID_User;
+        } else {
+            return -1;
+        }
+    }
 
     public NguoiDung getUserInfo(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -80,7 +156,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     public boolean addUser(String username, String password, String hoTen, String email, String sdt) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -94,9 +169,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result != -1;
     }
+
     public boolean updatePassword(String usernameOrEmail, String password) {
         return updatePasswordByEmail(usernameOrEmail, password) || updatePasswordByUsername(usernameOrEmail, password);
     }
+
     public boolean updatePasswordByEmail(String email, String newPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -107,6 +184,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return affectedRows > 0;
     }
+
     public boolean updatePasswordByUsername(String username, String newPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -117,6 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return affectedRows > 0;
     }
+
     public boolean checkEmailExist(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM User WHERE Email = ?";
@@ -128,9 +207,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return emailExists;
     }
+
     public boolean updateProfile(String usernameOrEmail, String newHoTen, String newEmail, String newSDT) {
         return updateUserInfoByEmail(usernameOrEmail, newHoTen, newEmail, newSDT) || updateUserInfoByUsername(usernameOrEmail, newHoTen, newEmail, newSDT);
     }
+
     public boolean updateUserInfoByUsername(String username, String newHoTen, String newEmail, String newSDT) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

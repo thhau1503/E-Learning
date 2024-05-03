@@ -29,7 +29,7 @@
         android:drawableLeft="@drawable/ic_email"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Email"
+        android:hint="Username/Email"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -71,10 +71,10 @@
         android:id="@+id/btnLogin"
         android:layout_width="345dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_bg"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="#6FD095"
         android:text="Login"
         android:textSize="25sp"
         android:textStyle="bold">
@@ -98,48 +98,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="SignUp"
+            android:text="Sign Up"
             android:textColor="#0000FF"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:textAlignment="center">
-
-        <Button
-            android:id="@+id/btnLoginGoogle"
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/btn_bg"
-            android:drawableLeft="@drawable/ic_google"
-            android:drawablePadding="10dp"
-            android:paddingLeft="20dp"
-            android:text="Google"
-            android:textAlignment="textStart"
-            android:textAllCaps="false">
-        </Button>
-
-        <Button
-            android:id="@+id/btnLoginFacebook"
-            android:layout_width="174dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="200dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/btn_bg"
-            android:drawableLeft="@drawable/ic_facebook"
-            android:drawablePadding="10dp"
-            android:paddingLeft="20dp"
-            android:text="Facebook"
-            android:textAlignment="textStart"
-            android:textAllCaps="false">
-        </Button>
-    </LinearLayout>
 </LinearLayout>

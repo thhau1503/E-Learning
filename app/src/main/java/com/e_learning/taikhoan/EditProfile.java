@@ -30,7 +30,7 @@ public class EditProfile extends AppCompatActivity{
             public void onClick(View v) {
                 String hoTen = HoTen.getText().toString().trim();
                 String phone = Phone.getText().toString().trim();
-                String email = Email.toString().trim();
+                String email = Email.getText().toString().trim();
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 String username = sharedPreferences.getString("username", "");
                 if (hoTen.isEmpty() || phone.isEmpty() || email.isEmpty()) {
@@ -43,7 +43,7 @@ public class EditProfile extends AppCompatActivity{
                         editor.putString("email", email);
                         editor.apply();
                         Toast.makeText(EditProfile.this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EditProfile.this, LoginActivity.class));
+                        startActivity(new Intent(EditProfile.this, ProfileActivity.class));
                     } else {
                         Toast.makeText(EditProfile.this, "Cập nhật thông tin thất bại!", Toast.LENGTH_SHORT).show();
                     }

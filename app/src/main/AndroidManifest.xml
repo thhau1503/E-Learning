@@ -19,6 +19,9 @@
         android:theme="@style/Theme.ELearning"
         tools:targetApi="31">
         <activity
+            android:name=".taikhoan.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".luyennghe.ListeningActivity"
             android:exported="false" />
         <activity
@@ -34,13 +37,10 @@
             android:name=".tuvung.ChuDeTuVungActivity"
             android:exported="false" />
         <activity
-            android:name=".LearningVocabActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".taikhoan.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,20 +48,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
+        <activity android:name=".taikhoan.EditProfile"
             android:exported="false" />
         <activity
-            android:name=".SignActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".CheckCodeActiviti"
+            android:name=".taikhoan.EditPassword"
             android:exported="false" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".taikhoan.SignActivity"
             android:exported="false" />
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".taikhoan.CheckCodeActiviti"
+            android:exported="false" />
+        <activity
+            android:name=".taikhoan.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".taikhoan.ResetPasswordActivity"
             android:exported="false" />
         <activity
             android:name=".dienkhuyet.DienKhuyetActivity"

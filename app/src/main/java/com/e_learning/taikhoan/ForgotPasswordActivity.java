@@ -47,7 +47,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
 
                 if (dbHelper.checkEmailExist(email)) {
-                    new SendEmailAsyncTask(email).execute();
+                    
                 } else {
                     Toast.makeText(ForgotPasswordActivity.this, "Email không tồn tại.", Toast.LENGTH_SHORT).show();
                 }
@@ -63,28 +63,4 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    private class SendEmailAsyncTask extends AsyncTask<Void, Void, Boolean> {
-        private String email;
-
-        public SendEmailAsyncTask(String email) {
-            this.email = email;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            return SendEmail.sendEmail(email);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (result) {
-                Intent intent = new Intent(ForgotPasswordActivity.this, CheckCodeActiviti.class);
-                intent.putExtra("EMAIL_EXTRA", email);
-                startActivity(intent);
-            } else {
-                Toast.makeText(ForgotPasswordActivity.this, "Gửi email thất bại.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }

@@ -30,7 +30,7 @@ public class EditPassword  extends AppCompatActivity {
             public void onClick(View v) {
                 String Oldpassword = oldPassword.getText().toString().trim();
                 String Newpassword = newPassword.getText().toString().trim();
-                String ConfirmPassword = confirmPassword.toString().trim();
+                String ConfirmPassword = confirmPassword.getText().toString().trim();
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 String username = sharedPreferences.getString("username", ""); // Nếu không tìm thấy, trả về giá trị mặc định là ""
                 String password = sharedPreferences.getString("password", ""); // Nếu không tìm thấy, trả về giá trị mặc định là ""
@@ -48,7 +48,7 @@ public class EditPassword  extends AppCompatActivity {
                 if(Newpassword.equals(ConfirmPassword)){
                     if (dbHelper.updatePassword(username, Newpassword)) {
                         Toast.makeText(EditPassword.this, "Cập nhật mật khẩu thành công!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(EditPassword.this, LoginActivity.class));
+                        startActivity(new Intent(EditPassword.this, ProfileActivity.class));
                     } else {
                         Toast.makeText(EditPassword.this, "Cập nhật mật khẩu thất bại!", Toast.LENGTH_SHORT).show();
                     }
