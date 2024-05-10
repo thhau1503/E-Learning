@@ -60,8 +60,9 @@ public class TuVungActivity extends AppCompatActivity {
                 @SuppressLint("Range") String audio = cursor.getString(cursor.getColumnIndex("Audio"));
                 @SuppressLint("Range") byte[] hinhanh = cursor.getBlob(cursor.getColumnIndex("HinhAnh"));
                 @SuppressLint("Range") int id_chude = cursor.getInt(cursor.getColumnIndex("ID_ChuDe"));
+                @SuppressLint("Range") String vidu = cursor.getString(cursor.getColumnIndex("ViDu"));
 
-                TuVung item = new TuVung(id,id_bo,tu,nghia,loai,audio,hinhanh,id_chude);
+                TuVung item = new TuVung(id,id_bo,tu,nghia,loai,audio,hinhanh,id_chude,vidu);
 
                 items.add(item);
             } while (cursor.moveToNext());

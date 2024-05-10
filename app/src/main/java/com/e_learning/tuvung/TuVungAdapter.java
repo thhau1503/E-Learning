@@ -1,6 +1,7 @@
 package com.e_learning.tuvung;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -49,7 +50,7 @@ public class TuVungAdapter extends ArrayAdapter<TuVung> {
         word.setText(Html.fromHtml(String.format("<b>%s</b> %s", "Từ vựng:", currentItem.getTu())));
         meaning.setText(Html.fromHtml(String.format("<b>%s</b> %s", "Nghĩa:", currentItem.getDichnghia())));
         pop.setText(Html.fromHtml(String.format("<b>%s</b> %s", "Loại từ:", currentItem.getLoaitu())));
-        example.setText(Html.fromHtml(String.format("<b>%s</b> %s", "Ví dụ:", currentItem.getDichnghia())));
+        example.setText(Html.fromHtml(String.format("<b>%s</b> %s", "Ví dụ:", currentItem.getViDu())));
 
         Bitmap bitmap = BitmapFactory.decodeByteArray(currentItem.getAnh(), 0, currentItem.getAnh().length);
         imgWord.setImageBitmap(bitmap);
@@ -62,7 +63,9 @@ public class TuVungAdapter extends ArrayAdapter<TuVung> {
             public void onClick(View v) {
                 try {
                     mediaPlayer.reset();
-                    mediaPlayer.setDataSource(currentItem.getAudio());
+                    AssetFileDescriptor afd = context.getAssets().openFd(currentItem.getAudio());
+                    mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    afd.close();
                     mediaPlayer.prepareAsync();
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override

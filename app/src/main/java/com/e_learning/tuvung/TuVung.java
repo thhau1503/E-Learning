@@ -13,7 +13,9 @@ public class TuVung implements Serializable {
 
     private int id_chude;
 
-    public TuVung(int idtu, int idbo, String tu, String dichnghia, String loaitu, String audio, byte[] anh, int id_chude) {
+    private  String ViDu;
+
+    public TuVung(int idtu, int idbo, String tu, String dichnghia, String loaitu, String audio, byte[] anh, int id_chude, String ViDu) {
         this.idtu = idtu;
         this.idbo = idbo;
         this.tu = tu;
@@ -22,6 +24,15 @@ public class TuVung implements Serializable {
         this.audio = audio;
         this.anh = anh;
         this.id_chude= id_chude;
+        this.ViDu = ViDu;
+    }
+
+    public String getViDu() {
+        return ViDu;
+    }
+
+    public void setViDu(String viDu) {
+        ViDu = viDu;
     }
 
     public int getIdtu() {
