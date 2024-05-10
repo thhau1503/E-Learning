@@ -60,7 +60,7 @@
             android:name=".taikhoan.SignActivity"
             android:exported="false" />
         <activity
-            android:name=".taikhoan.CheckCodeActiviti"
+            android:name=".taikhoan.CheckCodeActivity"
             android:exported="false" />
         <activity
             android:name=".taikhoan.ForgotPasswordActivity"

@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editLoginPassword);
         buttonLogin = findViewById(R.id.btnLogin);
 
+
         TextView textViewSignUp = (TextView) findViewById(R.id.textViewSignUp);
         TextView textViewForgotPassword = (TextView) findViewById(R.id.textViewforgotPassword);
 

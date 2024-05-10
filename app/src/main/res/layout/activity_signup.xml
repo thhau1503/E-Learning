@@ -103,11 +103,11 @@
         android:id="@+id/btnSignUpNext"
         android:layout_width="345dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_bg"
+        android:backgroundTint="#6FD095"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:text="Next"
+        android:text="Confirm"
         android:textSize="25sp"
         android:textStyle="bold">
     </Button>

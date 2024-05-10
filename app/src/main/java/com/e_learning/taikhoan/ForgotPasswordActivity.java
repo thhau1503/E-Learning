@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.e_learning.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
-
     TextView textViewLogIn;
     Button buttonSendEmail;
     private DatabaseHelper dbHelper;
@@ -47,7 +46,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
 
                 if (dbHelper.checkEmailExist(email)) {
-                    
+                    new SendEmailAsyncTask(email).execute();
                 } else {
                     Toast.makeText(ForgotPasswordActivity.this, "Email không tồn tại.", Toast.LENGTH_SHORT).show();
                 }
@@ -61,6 +60,24 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(email);
 
         return matcher.matches();
+    }
+
+    private class SendEmailAsyncTask extends AsyncTask<Void, Void, Void> {
+        private String email;
+
+        public SendEmailAsyncTask(String email) {
+            this.email = email;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int code = SendEmail.sendEmail(email);
+            Intent intent = new Intent(ForgotPasswordActivity.this, CheckCodeActivity.class);
+            intent.putExtra("CODE_EXTRA", String.valueOf(code));
+            intent.putExtra("EMAIL_EXTRA", email);
+            startActivity(intent);
+            return null;
+        }
     }
 
 }
